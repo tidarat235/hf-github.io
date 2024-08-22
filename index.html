@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+        #taskInput {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 300px;
+            max-width: 80%;
+        }
+        #addTaskBtn {
+            padding: 10px 20px;
+            background-color: #c41fb6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #addTaskBtn:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 300px;
+            max-width: 80%;
+        }
+        li {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        button {
+            background: #28a745;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        button.delete {
+            background: #dc3545;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        button.delete:hover {
+            opacity: 0.8;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-do List</h1>
+    <input type="text" id="taskInput" placeholder="กรอกงานที่ต้องทำ...">
+    <button id="addTaskBtn">Add</button>
+    
+    <ul id="taskList"></ul>
+
+    <script>
+        // รับ element ที่ต้องการใช้งาน
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        const taskList = document.getElementById('taskList');
+
+        // ฟังก์ชันเพื่อเพิ่มงานเข้าไปในรายการ
+        addTaskBtn.addEventListener('click', function() {
+            // รับค่าจาก input
+            const taskText = taskInput.value;
+
+            if (taskText === "") {
+                alert("กรุณากรอกข้อความ");
+                return;
+            }
+
+            // สร้างรายการใหม่ในรูปแบบของ <li>
+            const listItem = document.createElement('li');
+            listItem.textContent = taskText;
+
+            // สร้างปุ่ม Complete
+            const completeBtn = document.createElement('button');
+            completeBtn.textContent = "Complete";
+            completeBtn.addEventListener('click', function() {
+                listItem.classList.toggle('completed');
+            });
+
+            // สร้างปุ่ม Delete
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = "Delete";
+            deleteBtn.classList.add('delete');
+            deleteBtn.addEventListener('click', function() {
+                taskList.removeChild(listItem);
+            });
+
+            // เพิ่มปุ่มทั้งสองเข้าไปในรายการ <li>
+            listItem.appendChild(completeBtn);
+            listItem.appendChild(deleteBtn);
+
+            // เพิ่ม <li> เข้าไปในรายการ <ul>
+            taskList.appendChild(listItem);
+
+            // ล้างค่าในช่อง input
+            taskInput.value = "";
+        });
+    </script>
+</body>
+</html>
